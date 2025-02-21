@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Query,
+  Request,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -116,5 +117,15 @@ export class UserController {
   @ApiResponse({ status: 403, description: 'Forbidden' })
   async getData(@Query('email') email: string) {
     return this.userService.findByEmail(email);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get logged-in user profile' })
+  @ApiResponse({ status: 200, description: 'User profile data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  async getProfile(@Request() req) {
+    return this.userService.getDetail(req.user.sub);
   }
 }

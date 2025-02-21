@@ -145,7 +145,7 @@ export class UserService {
   async getDetail(id: number) {
     const user = await this.userRepo.findOne({
       where: { id },
-      select: ['id', 'email', 'isVerified', 'role'],
+      select: ['id', 'email', 'isVerified', 'role', 'isActive'],
     });
 
     if (!user) {
@@ -176,5 +176,12 @@ export class UserService {
 
     await this.userRepo.remove(user);
     return 'User deleted successfully';
+  }
+
+  async getProfiledata(id: number) {
+    return this.userRepo.findOne({
+      where: { id },
+      select: ['id', 'email', 'role', 'isVerified'], // Add necessary fields
+    });
   }
 }
