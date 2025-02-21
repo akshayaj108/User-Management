@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
   Query,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -63,13 +62,11 @@ export class UserController {
   async updateUserRole(@Param('id') id: string, @Body() body: UpdateRoleDto) {
     const formattedRole = body.role.trim().toLowerCase();
 
-    // Map lowercase input to ENUM values
     const roleMapping = {
       admin: UserRole.ADMIN,
       user: UserRole.USER,
     };
 
-    // Check if role is valid
     if (!(formattedRole in roleMapping)) {
       return { message: 'Role must be either USER or ADMIN' };
     }
@@ -120,14 +117,4 @@ export class UserController {
   async getData(@Query('email') email: string) {
     return this.userService.findByEmail(email);
   }
-
-  // @ApiBearerAuth()
-  // @UseGuards(JwtAuthGuard)
-  // @Get('profile')
-  // @ApiOperation({ summary: 'Get logged-in user profile' })
-  // @ApiResponse({ status: 200, description: 'User profile data' })
-  // async getProfile(@Request() req) {
-  //   console.log('first', req.user);
-  //   return this.userService.getDetail(req.user.id);
-  // }
 }
