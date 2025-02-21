@@ -45,7 +45,10 @@ export class UserService {
       `Copy and use the token to verify: ${verificationToken}`,
     );
 
-    return 'User created successfully, check email for verfication';
+    return {
+      message: 'User created successfully, check email for verfication',
+      user,
+    };
   }
 
   async verifyUser(token: string) {
