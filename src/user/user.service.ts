@@ -42,7 +42,7 @@ export class UserService {
     await this.mailService.sendMail(
       email,
       'Verify Your Email',
-      `Click the link to verify: ${verificationLink}`,
+      `Copy and use the token to verify: ${verificationToken}`,
     );
 
     return 'User created successfully, check email for verfication';
@@ -78,7 +78,7 @@ export class UserService {
     await this.mailService.sendMail(
       email,
       'Reset Password',
-      `Copy token to verify: ${tokenForReset} `,
+      `Copy and use token to verify: ${tokenForReset} `,
     );
     await this.userRepo.save(user);
     return {
